@@ -1,0 +1,47 @@
+.tela4 {
+    width: 375px;
+    margin-top: 108px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 25px;
+  }
+  
+  .tela4 h2 {
+    padding: 0 75px;
+    font-family: "Roboto";
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 28px;
+    color: #247a6b;
+  }
+  
+  .tela4 .conteiner {
+    margin: 15px 0 75px 0;
+  }
+  
+  .tela4 .categoria {
+    width: 325px;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    height: 90px;
+  }
+  
+  .tela4 h3 {
+    font-family: "Roboto", sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    color: #293845;
+    margin-bottom: 10px;
+  }
+  
+  .tela4 p {
+    font-family: "Roboto";
+    font-weight: 400;
+    font-size: 22px;
+    color: #293845;
+  }
+  
