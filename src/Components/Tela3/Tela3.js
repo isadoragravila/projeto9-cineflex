@@ -4,13 +4,13 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Footer from "../Footer/Footer";
 
-export default function Tela3() {
+export default function Tela3({ pedido, setPedido }) {
   const { idSessao } = useParams();
+  const [movie, setMovie] = useState({});
   const [seats, setSeats] = useState([]);
-  const [title, setTitle] = useState();
-  const [img, setImg] = useState();
   const [time, setTime] = useState();
-  const [day, setDay] = useState();
+  const [day, setDay] = useState({});
+  const [selected, setSelected] = useState([]);
 
   useEffect(() => {
     const promise = axios.get(
@@ -19,19 +19,29 @@ export default function Tela3() {
 
     promise.then((response) => {
       setSeats(response.data.seats);
-      setTitle(response.data.movie.title);
-      setImg(response.data.movie.posterURL);
+      setMovie(response.data.movie);
       setTime(response.data.name);
-      setDay(response.data.day.weekday);
+      setDay(response.data.day);
     });
   }, []);
+
+  function reservar() {
+    setPedido({
+      title: movie.title,
+      date: day.date,
+      time: time,
+      seats: selected,
+      name: "Isadora",
+      cpf: "000.000.000.00"
+    });
+  }
 
   return (
     <>
       <div className="tela3">
         <h2>Selecione o(s) assento(s)</h2>
         <div className="cadeiras">
-          {seats.map((seat, index) => <Cadeiras key={index} seat={seat} />)}
+          {seats.map((seat, index) => <Cadeiras key={index} seat={seat} selected={selected} setSelected={setSelected} />)}
         </div>
         <div className="indice">
           <div className="legenda">
@@ -54,24 +64,30 @@ export default function Tela3() {
           <input type="text" placeholder="Digite seu CPF..." />
         </div>
         <Link to="/sucesso" style={{ textDecoration: "none" }}>
-          <div className="botao">Reservar assento(s)</div>
+          <div className="botao" onClick={reservar}>Reservar assento(s)</div>
         </Link>
       </div>
-      <Footer title={title} img={img} time={time} day={day} />
+      <Footer title={movie.title} img={movie.posterURL} time={time} day={day.weekday} />
     </>
   );
 }
 
 function Cadeiras ({ seat }) {
-  const [selected, setSelected] = useState(false);
+  const [click, setClick] = useState(true);
+
+  function clicked() {
+    setClick(!click);
+    if (click) {
+      setSelected([...selected, { id: seat.id, name: seat.name }]);
+    } else {
+      setSelected(selected.filter((item) => item.id !== seat.id));
+    }
+  }
 
   return (
     <>
       {seat.isAvailable ? (
-        <div
-          className={selected ? "cadeira verde" : "cadeira"}
-          onClick={() => setSelected(!selected)}
-        >
+        <div className={click ? "cadeira" : "cadeira verde"} onClick={clicked}>
           {seat.name}
         </div>
       ) : (

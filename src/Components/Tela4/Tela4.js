@@ -1,25 +1,28 @@
 import "./style.css";
 import { Link } from "react-router-dom";
 
-export default function Tela4() {
+export default function Tela4({pedido, setPedido}) {
   return (
     <div className="tela4">
       <h2>Pedido feito com sucesso!</h2>
       <div className="conteiner">
         <div className="categoria">
           <h3>Filme e sessão</h3>
-          <p>Enola Holmes</p>
-          <p>24/06/2021 15:00</p>
+          <p>{pedido.title}</p>
+          <p>
+            {pedido.date} {pedido.time}
+          </p>
         </div>
         <div className="categoria">
           <h3>Ingressos</h3>
-          <p>Assento 15</p>
-          <p>Assento 16</p>
+          {pedido.seats.map((seat, index) => (
+            <p key={index}>Assento {seat.name}</p>
+          ))}
         </div>
         <div className="categoria">
           <h3>Comprador</h3>
-          <p>Nome: João da Silva Sauro</p>
-          <p>CPF: 123.456.789-10</p>
+          <p>Nome: {pedido.name}</p>
+          <p>CPF: {pedido.cpf}</p>
         </div>
       </div>
       <Link to="/" style={{ textDecoration: "none" }}>

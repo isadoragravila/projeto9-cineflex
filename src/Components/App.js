@@ -1,4 +1,4 @@
-import React from "react";
+import {useState} from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "../Assets/reset.css";
 import "../Assets/style.css";
@@ -8,6 +8,8 @@ import Tela3 from "../Components/Tela3/Tela3";
 import Tela4 from "../Components/Tela4/Tela4";
 
 export default function App() {
+  const [pedido, setPedido] = useState({ seats: [] });
+
   return (
     <BrowserRouter>
       <header>
@@ -16,8 +18,8 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Tela1 />} />
         <Route path="/sessoes/:idFilme" element={<Tela2 />} />
-        <Route path="/assentos/:idSessao" element={<Tela3 />} />
-        <Route path="/sucesso" element={<Tela4 />} />
+        <Route path="/assentos/:idSessao" element={<Tela3 pedido={pedido} setPedido={setPedido} />} />
+        <Route path="/sucesso" element={<Tela4 pedido={pedido} setPedido={setPedido} />} />
       </Routes>
     </BrowserRouter>
   );
