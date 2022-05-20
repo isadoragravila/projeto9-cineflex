@@ -1,63 +1,37 @@
 import "./style.css";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import Footer from "../Footer/Footer";
 
 export default function Tela3() {
+  const { idSessao } = useParams();
+  const [seats, setSeats] = useState([]);
+  const [title, setTitle] = useState();
+  const [img, setImg] = useState();
+  const [time, setTime] = useState();
+  const [day, setDay] = useState();
+
+  useEffect(() => {
+    const promise = axios.get(
+      `https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${idSessao}/seats`
+    );
+
+    promise.then((response) => {
+      setSeats(response.data.seats);
+      setTitle(response.data.movie.title);
+      setImg(response.data.movie.posterURL);
+      setTime(response.data.name);
+      setDay(response.data.day.weekday);
+    });
+  }, []);
+
   return (
     <>
       <div className="tela3">
         <h2>Selecione o(s) assento(s)</h2>
         <div className="cadeiras">
-          <div className="cadeira verde">01</div>
-          <div className="cadeira">02</div>
-          <div className="cadeira amarela">03</div>
-          <div className="cadeira">04</div>
-          <div className="cadeira">05</div>
-          <div className="cadeira">06</div>
-          <div className="cadeira">07</div>
-          <div className="cadeira">08</div>
-          <div className="cadeira">09</div>
-          <div className="cadeira">10</div>
-          <div className="cadeira">10</div>
-          <div className="cadeira">10</div>
-          <div className="cadeira">10</div>
-          <div className="cadeira">10</div>
-          <div className="cadeira">10</div>
-          <div className="cadeira">10</div>
-          <div className="cadeira">10</div>
-          <div className="cadeira">10</div>
-          <div className="cadeira">10</div>
-          <div className="cadeira">10</div>
-          <div className="cadeira">10</div>
-          <div className="cadeira">10</div>
-          <div className="cadeira">10</div>
-          <div className="cadeira">10</div>
-          <div className="cadeira">10</div>
-          <div className="cadeira">10</div>
-          <div className="cadeira">10</div>
-          <div className="cadeira">10</div>
-          <div className="cadeira">10</div>
-          <div className="cadeira">10</div>
-          <div className="cadeira">10</div>
-          <div className="cadeira">10</div>
-          <div className="cadeira">10</div>
-          <div className="cadeira">10</div>
-          <div className="cadeira">10</div>
-          <div className="cadeira">10</div>
-          <div className="cadeira">10</div>
-          <div className="cadeira">10</div>
-          <div className="cadeira">10</div>
-          <div className="cadeira">10</div>
-          <div className="cadeira">10</div>
-          <div className="cadeira">10</div>
-          <div className="cadeira">10</div>
-          <div className="cadeira">10</div>
-          <div className="cadeira">10</div>
-          <div className="cadeira">10</div>
-          <div className="cadeira">10</div>
-          <div className="cadeira">10</div>
-          <div className="cadeira">10</div>
-          <div className="cadeira">10</div>
+          {seats.map((seat, index) => <Cadeiras key={index} seat={seat} />)}
         </div>
         <div className="indice">
           <div className="legenda">
@@ -83,7 +57,15 @@ export default function Tela3() {
           <div className="botao">Reservar assento(s)</div>
         </Link>
       </div>
-      <Footer />
+      <Footer title={title} img={img} time={time} day={day} />
+    </>
+  );
+}
+
+function Cadeiras ({ seat }) {
+  return (
+    <>
+      {seat.isAvailable ? <div className="cadeira">{seat.name}</div> : <div className="cadeira amarela">{seat.name}</div>}
     </>
   );
 }

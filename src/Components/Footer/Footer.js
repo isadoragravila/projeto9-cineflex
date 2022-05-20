@@ -1,4 +1,4 @@
-export default function Footer({ title, img }) {
+export default function Footer({ title, img, time, day }) {
     return (
       <div>
         <footer>
@@ -7,7 +7,7 @@ export default function Footer({ title, img }) {
           </div>
           <div>
             <p>{title}</p>
-            <p></p>
+            {time ? <p>{`${day} - ${time}`}</p> : null}
           </div>
         </footer>
       </div>

@@ -10,7 +10,7 @@ function Session({ weekday, date, showtimes }) {
       <p>{`${weekday} - ${date}`}</p>
       <div className="horarios">
         {showtimes.map((showtime, index) => (
-          <Link key={index} to="/assentos" style={{ textDecoration: "none" }}>
+          <Link key={index} to={`/assentos/${showtime.id}`} style={{ textDecoration: "none" }}>
             <div className="horario">{showtime.name}</div>
           </Link>
         ))}
@@ -21,7 +21,6 @@ function Session({ weekday, date, showtimes }) {
 
 export default function Tela2() {
   const { idFilme } = useParams();
-  //const [movie, setMovie] = useState();
   const [title, setTitle] = useState();
   const [img, setImg] = useState();
   const [days, setDays] = useState([]);
