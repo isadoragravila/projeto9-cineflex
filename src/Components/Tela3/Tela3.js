@@ -63,9 +63,25 @@ export default function Tela3() {
 }
 
 function Cadeiras ({ seat }) {
+  const [selected, setSelected] = useState(false);
+
   return (
     <>
-      {seat.isAvailable ? <div className="cadeira">{seat.name}</div> : <div className="cadeira amarela">{seat.name}</div>}
+      {seat.isAvailable ? (
+        <div
+          className={selected ? "cadeira verde" : "cadeira"}
+          onClick={() => setSelected(!selected)}
+        >
+          {seat.name}
+        </div>
+      ) : (
+        <div
+          className="cadeira amarela"
+          onClick={() => alert("Esse assento não está disponível")}
+        >
+          {seat.name}
+        </div>
+      )}
     </>
   );
 }

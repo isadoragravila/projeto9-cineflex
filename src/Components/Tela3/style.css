@@ -28,6 +28,7 @@
     border: 1px solid #808f9d;
     border-radius: 12px;
     margin: 0 3.25px 18px 3.25px;
+    cursor: pointer;
   }
   
   .tela3 .verde {
