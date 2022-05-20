@@ -72,7 +72,7 @@ export default function Tela3({ pedido, setPedido }) {
   );
 }
 
-function Cadeiras ({ seat }) {
+function Cadeiras ({ seat, selected, setSelected }) {
   const [click, setClick] = useState(true);
 
   function clicked() {
