@@ -16,7 +16,7 @@ export default function Tela4({pedido, setPedido}) {
         <div className="categoria">
           <h3>Ingressos</h3>
           {pedido.seats.map((seat, index) => (
-            <p key={index}>Assento {seat.name}</p>
+            <p key={index}>Assento {seat}</p>
           ))}
         </div>
         <div className="categoria">

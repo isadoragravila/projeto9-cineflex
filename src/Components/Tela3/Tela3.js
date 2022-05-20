@@ -11,6 +11,10 @@ export default function Tela3({ pedido, setPedido }) {
   const [time, setTime] = useState();
   const [day, setDay] = useState({});
   const [selected, setSelected] = useState([]);
+  const [ids, setIds] = useState([]);
+  const [name, setName] = useState("");
+  const [cpf, setCpf] = useState("");
+  const [posted, setPosted] = useState({});
 
   useEffect(() => {
     const promise = axios.get(
@@ -31,9 +35,14 @@ export default function Tela3({ pedido, setPedido }) {
       date: day.date,
       time: time,
       seats: selected,
-      name: "Isadora",
-      cpf: "000.000.000.00"
+      name: name,
+      cpf: cpf
     });
+
+    axios.post(
+      "https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many",
+      { ids: ids, name: name, cpf: cpf }
+    );
   }
 
   return (
@@ -41,7 +50,16 @@ export default function Tela3({ pedido, setPedido }) {
       <div className="tela3">
         <h2>Selecione o(s) assento(s)</h2>
         <div className="cadeiras">
-          {seats.map((seat, index) => <Cadeiras key={index} seat={seat} selected={selected} setSelected={setSelected} />)}
+          {seats.map((seat, index) => (
+            <Cadeiras
+              key={index}
+              seat={seat}
+              selected={selected}
+              setSelected={setSelected}
+              ids={ids}
+              setIds={setIds}
+            />
+          ))}
         </div>
         <div className="indice">
           <div className="legenda">
@@ -59,28 +77,47 @@ export default function Tela3({ pedido, setPedido }) {
         </div>
         <div className="dados">
           <p>Nome do comprador:</p>
-          <input type="text" placeholder="Digite seu nome..." />
+          <input
+            type="text"
+            placeholder="Digite seu nome..."
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
           <p>CPF do comprador:</p>
-          <input type="text" placeholder="Digite seu CPF..." />
+          <input
+            type="text"
+            placeholder="Digite seu CPF..."
+            value={cpf}
+            onChange={(e) => setCpf(e.target.value)}
+          />
         </div>
         <Link to="/sucesso" style={{ textDecoration: "none" }}>
-          <div className="botao" onClick={reservar}>Reservar assento(s)</div>
+          <div className="botao" onClick={reservar}>
+            Reservar assento(s)
+          </div>
         </Link>
       </div>
-      <Footer title={movie.title} img={movie.posterURL} time={time} day={day.weekday} />
+      <Footer
+        title={movie.title}
+        img={movie.posterURL}
+        time={time}
+        day={day.weekday}
+      />
     </>
   );
 }
 
-function Cadeiras ({ seat, selected, setSelected }) {
+function Cadeiras({ seat, selected, setSelected, ids, setIds }) {
   const [click, setClick] = useState(true);
 
   function clicked() {
     setClick(!click);
     if (click) {
-      setSelected([...selected, { id: seat.id, name: seat.name }]);
+      setSelected([...selected, seat.name]);
+      setIds([...ids, seat.id]);
     } else {
-      setSelected(selected.filter((item) => item.id !== seat.id));
+      setSelected(selected.filter((item) => item !== seat.name));
+      setIds(ids.filter((item) => item !== seat.id));
     }
   }
 
