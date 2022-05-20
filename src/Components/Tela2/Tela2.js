@@ -21,8 +21,7 @@ function Session({ weekday, date, showtimes }) {
 
 export default function Tela2() {
   const { idFilme } = useParams();
-  const [title, setTitle] = useState();
-  const [img, setImg] = useState();
+  const [movie, setMovie] = useState({});
   const [days, setDays] = useState([]);
 
   useEffect(() => {
@@ -31,8 +30,7 @@ export default function Tela2() {
     );
 
     promise.then((response) => {
-      setTitle(response.data.title);
-      setImg(response.data.posterURL);
+      setMovie(response.data);
       setDays(response.data.days);
     });
   }, []);
@@ -52,7 +50,7 @@ export default function Tela2() {
           ))}
         </div>
       </div>
-      <Footer title={title} img={img} />
+      <Footer title={movie.title} img={movie.posterURL} />
     </>
   );
 }
