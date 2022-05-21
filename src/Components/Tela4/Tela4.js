@@ -1,7 +1,7 @@
 import "./style.css";
 import { Link } from "react-router-dom";
 
-export default function Tela4({pedido, setPedido}) {
+export default function Tela4({ pedido, setPedido, setIds }) {
   return (
     <div className="tela4">
       <h2>Pedido feito com sucesso!</h2>
@@ -26,7 +26,15 @@ export default function Tela4({pedido, setPedido}) {
         </div>
       </div>
       <Link to="/" style={{ textDecoration: "none" }}>
-        <div className="botao">Voltar pra Home</div>
+        <div
+          className="botao"
+          onClick={() => {
+            setPedido({ seats: [] });
+            setIds([]);
+          }}
+        >
+          Voltar pra Home
+        </div>
       </Link>
     </div>
   );

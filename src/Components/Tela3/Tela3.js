@@ -4,17 +4,15 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Footer from "../Footer/Footer";
 
-export default function Tela3({ pedido, setPedido }) {
+export default function Tela3({ setPedido, ids, setIds }) {
   const { idSessao } = useParams();
   const [movie, setMovie] = useState({});
   const [seats, setSeats] = useState([]);
   const [time, setTime] = useState();
   const [day, setDay] = useState({});
   const [selected, setSelected] = useState([]);
-  const [ids, setIds] = useState([]);
   const [name, setName] = useState("");
   const [cpf, setCpf] = useState("");
-  const [posted, setPosted] = useState({});
 
   useEffect(() => {
     const promise = axios.get(
