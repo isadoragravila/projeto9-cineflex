@@ -1,5 +1,5 @@
 import "./style.css";
-import { Link, useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Footer from "../Footer/Footer";
@@ -13,6 +13,7 @@ export default function Tela3({ setPedido, ids, setIds }) {
   const [selected, setSelected] = useState([]);
   const [name, setName] = useState("");
   const [cpf, setCpf] = useState("");
+  let navigate = useNavigate();
 
   useEffect(() => {
     const promise = axios.get(
@@ -37,10 +38,13 @@ export default function Tela3({ setPedido, ids, setIds }) {
       cpf: cpf
     });
 
-    axios.post(
-      "https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many",
-      { ids: ids, name: name, cpf: cpf }
-    );
+    if (ids.length !== 0 && name.length !== 0 && cpf.length === 11) {
+      navigate("/sucesso");
+      axios.post(
+        "https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many",
+        { ids: ids, name: name, cpf: cpf }
+      );
+    }
   }
 
   return (
@@ -89,11 +93,9 @@ export default function Tela3({ setPedido, ids, setIds }) {
             onChange={(e) => setCpf(e.target.value)}
           />
         </div>
-        <Link to="/sucesso" style={{ textDecoration: "none" }}>
-          <div className="botao" onClick={reservar}>
-            Reservar assento(s)
-          </div>
-        </Link>
+        <div className="botao" onClick={reservar}>
+          Reservar assento(s)
+        </div>
       </div>
       <Footer
         title={movie.title}
