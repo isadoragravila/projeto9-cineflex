@@ -58,16 +58,23 @@ export default function Tela3({ setPedido, ids, setIds }) {
   }, []);
 
   function reservar() {
-    setPedido({
-      title: movie.title,
-      date: day.date,
-      time: time,
-      seats: selected.sort((a, b) => a - b),
-      name: name,
-      cpf: cpf
-    });
+    const regex = /[0-9]{11}/gm;
+    if (ids.length === 0) {
+      alert("Selecione pelo menos um assento");
+    } else if (name.length === 0) {
+      alert("Digite o nome.");
+    } else if (cpf.length !== 11 || !regex.test(cpf)) {
+      alert("CPF somente números.");
+    } else {
+      setPedido({
+        title: movie.title,
+        date: day.date,
+        time: time,
+        seats: selected.sort((a, b) => a - b),
+        name: name,
+        cpf: cpf.slice(0 , 3) + "." + cpf.slice(3 , 6) + "." + cpf.slice(6 , 9) + "-" + cpf.slice(9)
+      });
 
-    if (ids.length !== 0 && name.length !== 0 && cpf.length === 11) {
       navigate("/sucesso");
       axios.post(
         "https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many",
