@@ -62,7 +62,7 @@ export default function Tela3({ setPedido, ids, setIds }) {
       title: movie.title,
       date: day.date,
       time: time,
-      seats: selected,
+      seats: selected.sort((a, b) => a - b),
       name: name,
       cpf: cpf
     });
