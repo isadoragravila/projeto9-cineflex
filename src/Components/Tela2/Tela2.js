@@ -1,21 +1,21 @@
-import "./style.css";
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Footer from "../Footer/Footer";
+import styled from "styled-components";
 
 function Session({ weekday, date, showtimes }) {
   return (
-    <div className="sessao">
+    <Sessao>
       <p>{`${weekday} - ${date}`}</p>
-      <div className="horarios">
+      <Horarios>
         {showtimes.map((showtime, index) => (
           <Link key={index} to={`/assentos/${showtime.id}`} style={{ textDecoration: "none" }}>
-            <div className="horario">{showtime.name}</div>
+            <Horario>{showtime.name}</Horario>
           </Link>
         ))}
-      </div>
-    </div>
+      </Horarios>
+    </Sessao>
   );
 }
 
@@ -37,20 +37,63 @@ export default function Tela2() {
 
   return (
     <>
-      <div className="tela2">
+      <Conteiner>
         <h2>Selecione o horário</h2>
-        <div className="sessoes">
-          {days.map((day, index) => (
-            <Session
-              key={index}
-              weekday={day.weekday}
-              date={day.date}
-              showtimes={day.showtimes}
-            />
-          ))}
-        </div>
-      </div>
+        <Sessoes>
+          {days.map((day, index) => ( <Session key={index} weekday={day.weekday} date={day.date} showtimes={day.showtimes} /> ))}
+        </Sessoes>
+      </Conteiner>
       <Footer title={movie.title} img={movie.posterURL} />
     </>
   );
 }
+
+const Conteiner = styled.div`
+  width: 375px;
+  margin-top: 108px;
+  margin-bottom: 117px;
+  display: flex;
+  flex-direction: column;
+  padding: 0 25px;
+`;
+
+const Sessoes = styled.div`
+  margin-top: 41px;
+  display: flex;
+  flex-direction: column;
+`;
+
+const Sessao = styled.div`
+  margin-bottom: 25px;
+  display: flex;
+  flex-direction: column;
+
+  p {
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    color: #293845;
+    margin-bottom: 25px;
+  }
+`;
+
+const Horarios = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
+
+const Horario = styled.div`
+  margin-right: 8px;
+  margin-bottom: 8px;
+  width: 83px;
+  height: 43px;
+  background-color: #e8833a;
+  border-radius: 3px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
