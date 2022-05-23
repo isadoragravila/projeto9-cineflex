@@ -3,9 +3,9 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
 
-function Movie({ img, title, id }) {
+function Movie({ img, title, id, setHome }) {
   return (
-    <Link to={`/sessoes/${id}`}>
+    <Link to={`/sessoes/${id}`} onClick={() => setHome(`/sessoes`)}>
       <Filme>
         <img src={img} alt={title} />
       </Filme>
@@ -13,7 +13,7 @@ function Movie({ img, title, id }) {
   );
 }
 
-export default function Tela1() {
+export default function Tela1({ setHome }) {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ export default function Tela1() {
     <Conteiner>
       <h2>Selecione o filme</h2>
       <Filmes>
-        {movies.map((movie, index) => (<Movie key={index} img={movie.posterURL} title={movie.title} id={movie.id} />))}
+        {movies.map((movie, index) => (<Movie key={index} img={movie.posterURL} title={movie.title} id={movie.id} setHome={setHome} />))}
       </Filmes>
     </Conteiner>
   );

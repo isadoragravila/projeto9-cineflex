@@ -33,7 +33,7 @@ function Cadeiras({ seat, selected, setSelected, ids, setIds }) {
   );
 }
 
-export default function Tela3({ setPedido, ids, setIds }) {
+export default function Tela3({ setPedido, ids, setIds, setHome }) {
   const { idSessao } = useParams();
   const [movie, setMovie] = useState({});
   const [seats, setSeats] = useState([]);
@@ -75,6 +75,7 @@ export default function Tela3({ setPedido, ids, setIds }) {
         cpf: cpf.slice(0 , 3) + "." + cpf.slice(3 , 6) + "." + cpf.slice(6 , 9) + "-" + cpf.slice(9)
       });
 
+      setHome("/sucesso");
       navigate("/sucesso");
       axios.post(
         "https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many",

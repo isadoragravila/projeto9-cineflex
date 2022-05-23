@@ -4,13 +4,13 @@ import axios from "axios";
 import Footer from "../Footer/Footer";
 import styled from "styled-components";
 
-function Session({ weekday, date, showtimes }) {
+function Session({ weekday, date, showtimes, setHome }) {
   return (
     <Sessao>
       <p>{`${weekday} - ${date}`}</p>
       <Horarios>
         {showtimes.map((showtime, index) => (
-          <Link key={index} to={`/assentos/${showtime.id}`} style={{ textDecoration: "none" }}>
+          <Link key={index} to={`/assentos/${showtime.id}`} style={{ textDecoration: "none" }} onClick={() => setHome(`/assentos`)}>
             <Horario>{showtime.name}</Horario>
           </Link>
         ))}
@@ -19,7 +19,7 @@ function Session({ weekday, date, showtimes }) {
   );
 }
 
-export default function Tela2() {
+export default function Tela2({ setHome }) {
   const { idFilme } = useParams();
   const [movie, setMovie] = useState({});
   const [days, setDays] = useState([]);
@@ -40,7 +40,7 @@ export default function Tela2() {
       <Conteiner>
         <h2>Selecione o horário</h2>
         <Sessoes>
-          {days.map((day, index) => ( <Session key={index} weekday={day.weekday} date={day.date} showtimes={day.showtimes} /> ))}
+          {days.map((day, index) => ( <Session key={index} weekday={day.weekday} date={day.date} showtimes={day.showtimes} setHome={setHome} /> ))}
         </Sessoes>
       </Conteiner>
       <Footer title={movie.title} img={movie.posterURL} />

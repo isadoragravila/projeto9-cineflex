@@ -27,6 +27,31 @@ header h1 {
   color: #e8833a;
 }
 
+header .voltar {
+  position: absolute;
+  top: 19px;
+  left: 20px;
+  width: 29px;
+  height: 29px;
+  border-radius: 5px;
+  border: 1px solid #808f9d;
+  background-color: #c3cfd9;
+  box-shadow: 0 2px 4px 2px rgba(128, 143, 157, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+header .voltar:hover {
+  cursor: pointer;
+  filter: brightness(0.9);
+}
+
+ion-icon {
+  font-size: 20px;
+  color: #808f9d;
+}
+
 h2 {
   font-family: "Roboto", sans-serif;
   font-weight: 400;
