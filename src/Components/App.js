@@ -7,7 +7,6 @@ import Tela1 from "../Components/Tela1/Tela1";
 import Tela2 from "../Components/Tela2/Tela2";
 import Tela3 from "../Components/Tela3/Tela3";
 import Tela4 from "../Components/Tela4/Tela4";
-import Header from "./Header/Header";
 
 export default function App() {
   const [pedido, setPedido] = useState({ seats: [] });
